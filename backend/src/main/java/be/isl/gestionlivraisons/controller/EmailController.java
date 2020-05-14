@@ -37,12 +37,6 @@ public class EmailController {
         MailConfig MailData = new MailConfig();
 
         UserDto sendMail = new UserDto(userRepository.findById(userPrincipal.getId()).get());
-/*
-        System.out.println(" password password password password password password password password  " );
-        System.out.println(" password : " + sendMail.getEmail_password());
-        System.out.println(" password password password password password password password password  " );
-*/
-        //MailData.setMailData(sendMail);
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(sendMailDto.getReceiver());
