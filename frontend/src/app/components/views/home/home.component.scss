@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css?family=Courgette|Roboto');
+
+$ff-serif: 'Courgette', serif;
+$ff-sans-serif: 'Roboto', sans-serif;
+$color-accent: #A9DFBF;
+
+$assets: (
+    1: 'road.jpg',
+    2: 'car-map.jpg',
+    3: 'driver.jpg',
+    4: 'bus.jpg'
+);
+
+@function image($key) {
+    $id: map-get($assets, $key);
+    @return url('../../../../assets/images/' + $id);
+}
+
+
+// Global styles
+* { box-sizing: border-box; }
+
+p {
+    font-family: $ff-sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+
+blockquote {
+    position: relative;
+    padding-left: 1.5rem;
+    font-family: $ff-serif;
+    font-size: 2rem;
+    line-height: 1.25;
+    letter-spacing: -0.05rem;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+        background-color: $color-accent;
+        border-radius: 60px;
+    }
+}
+
+
+// Fixed background image element
+figure {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+// Hero section
+.hero {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0);
+
+    @each $asset in $assets {
+        $i: index($assets, $asset);
+        &:nth-child(#{$i}) figure {
+            background-image: image($i);
+            background-size: cover;
+        }
+    }
+}
+
+.hero__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 0 1rem;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-family: $ff-serif;
+    font-size: 8vw;
+    letter-spacing: -0.125rem;
+    text-align: center;
+
+    @media (min-width: 1200px) {
+        font-size: 6rem;
+  }
+}
+
+
+// Content section
+.content {
+    position: relative;
+    margin: 0 auto 8rem;
+    padding: 2rem;
+
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: -100px;
+        left: 0;
+        width: 100%;
+        height: 100px;
+        background-color: white;
+        z-index: 99;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    }
+}
+
+.content__inner {
+    margin: 0 auto;
+    max-width: 700px;
+
+    > * + *   { margin-top: 1.5rem; }
+    > blockquote {  margin: 3rem 0; }
+}
+
+.content__title {
+    font-family: $ff-serif;
+    font-size: 3rem;
+    line-height: 1.25;
+    letter-spacing: -0.125rem;
+    text-align: center;
+
+    @media (min-width: 600px) {
+        font-size: 4rem;
+    }
+}
+
+.content__author {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    width: 100%;
+    font-family: $ff-serif;
+    font-size: 1.5rem;
+    letter-spacing: -0.125rem;
+    text-align: center;
+
+    &:before,
+    &:after {
+        content: '';
+        flex: 1;
+        height: 2px;
+        background-color: $color-accent;
+    }
+
+    &:before { margin-right: 1rem; }
+    &:after  { margin-left:  1rem; }
+}
+
+.login-link {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    background: #A9DFBF;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+    margin: auto;
+    width: 200px;
+}
+
+.login-link:hover {
+    background: rgb(46, 70, 55);
+}
+
+.login-link {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  background: #A9DFBF;
+  padding: 20px;
+  border-radius: 5px;
+  transition: none;
+  text-align: center;
+  display: block;
+  position: relative;
+  width: 200px;
+}
+
+a {
+  display: block;
+  margin: auto;
+}

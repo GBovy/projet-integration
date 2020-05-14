@@ -1,0 +1,80 @@
+logging:
+    level:
+        org.springframework: debug
+        org.hibernate.SQL: debug
+        root: info
+server:
+    port: 8080
+
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        username: postgres
+        password: pass
+        url: jdbc:postgresql://localhost:5432/projet-integration
+
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        generate-ddl: true
+        show-sql: true
+        hibernate:
+
+###############################################
+##           Creating database               ##
+###############################################
+#            ddl-auto: create
+
+###############################################
+## Running flyway to initialize the database ##
+###############################################
+            ddl-auto: validate
+    flyway:
+        baseline-on-migrate: true
+        enabled: false
+        locations:
+            classpath:db/migration
+
+
+    ###############################################
+##     Security configuration for OAUTH2     ##
+###############################################
+    security:
+        oauth2:
+            client:
+                registration:
+                    google:
+                        clientId: 74626645774-mofpb7h0m0l6ea03j6ujqkqv1mptn63p.apps.googleusercontent.com
+                        clientSecret: uv2LSBIISBxWm2wj9ZP_jqss
+                        redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+                        scope:
+                            - email
+                            - profile
+
+                    facebook:
+                        clientId: 2829353940409063
+                        clientSecret: 43bae43274064e38e3a3f0a1591b2539
+                        redirectUriTemplate: "{baseUrl}/oauth2/callback/{registrationId}"
+                        scope:
+                            - email
+                            - public_profile
+                provider:
+                    facebook:
+                        authorizationUri: https://www.facebook.com/v3.0/dialog/oauth
+                        tokenUri: https://graph.facebook.com/v3.0/oauth/access_token
+                        userInfoUri: https://graph.facebook.com/v3.0/me?fields=id,first_name,middle_name,last_name,name,email,verified,is_verified,picture.width(250).height(250)
+app:
+    auth:
+        tokenSecret: 926D96C90030DD58429D2751AC1BDBBC
+        tokenExpirationMsec: 864000000
+    oauth2:
+        # After successfully authenticating with the OAuth2 Provider,
+        # we'll be generating an auth token for the user and sending the token to the
+        # redirectUri mentioned by the client in the /oauth2/authorize request.
+        # We're not using cookies because they won't work well in mobile clients.
+        authorizedRedirectUris:
+            - http://localhost:4500/oauth2/redirect
+            - http://localhost:8080/oauth2/redirect
+            - myandroidapp://oauth2/redirect
+            - myiosapp://oauth2/redirect
+
+

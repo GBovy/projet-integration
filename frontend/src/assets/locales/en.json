@@ -1,0 +1,98 @@
+{
+    "COMPONENTS": {
+        "HOME": {
+            "TITLE_ONE": "A sudden urge to travel ...",
+            "TITLE_TWO": "... Or only to see the country ...",
+            "TITLE_THREE": "...and get paid in return ?",
+            "TITLE_FOUR": "Join us !",
+            "TITLE_FIVE": "What we do",
+            "TITLE_SIX": "By Institut Saint Laurent",
+            "PARAGRAPH_ONE": "Are you used to moving around a lot ?",
+            "PARAGRAPH_TWO": "Have you ever dreamed of being able to benefit from remuneration when you move from city to city or when you travel ?",
+            "PARAGRAPH_THREE": "Where do you want to simply send your packages without it costing you too much ?",
+            "PARAGRAPH_FOUR": "In this case, we assure you that the title is made for you !",
+            "PARAGRAPH_FIVE": "Indeed, this is a community delivery system. You will meet many people who want to send their packages",
+            "PARAGRAPH_SIX": "Or you can take advantage of their trips to deliver your packages.",
+            "PARAGRAPH_SEVEN": "So go ahead and send your packages now safely, verified and cheaper wherever you want in the world.",
+            "PARAGRAPH_EIGHT": "Do you think you are finally ready for the great adventure and to join us ?",
+            "PARAGRAPH_NINE": "So go ahead and join us ...",
+            "PARAGRAPH_TEN": "Let's go !"
+        },
+        "NAVIGATION": {
+            "LOCALE": {
+                "TITLE": "Lang",
+                "FR": "FR",
+                "EN": "EN"
+            },
+            "HOME": "Home",
+            "PRODUCTS_OFFERS": "Delivery products",
+            "PRODUCTS_DELIVERY": "Offer products",
+            "PROFILE": "Profile",
+            "LOGIN": "Login",
+            "LOGOUT": "Logout",
+            "REGISTER": "Register"
+        },
+        "PRODUCTS": {
+            "TITLE": "Products list"
+        },
+        "LOGIN": {
+            "LOGIN_WITH_GOOGLE": "Se connecter avec Google",
+            "LOGIN_WITH_FACEBOOK": "Se connecter avec Facebook",
+            "REGISTER": "S'enregistrer",
+            "LOGIN": "Se connecter"
+        },
+        "REGISTER": {
+            "REGISTER": "S'enregistrer",
+            "REGISTER_FACEBOOK": "S'enregistrer avec Facebook",
+            "REGISTER_GOOGLE": "S'enregistrer avec Google"
+        },
+        "PROFILE": {
+            "TITLE": "Profile informations",
+            "LASTNAME": "Last name",
+            "FIRSTNAME": "First name",
+            "EMAIL": "Email address",
+            "PASSWORD": "Passphrase",
+            "CONFIRM_PASSWORD": "Confirm passphrase",
+            "ACCOUNT_TYPE": "Account type",
+            "ADDRESS": "Adress",
+            "COUNTRY": "Country",
+            "ZIP": "Zip code",
+            "BANKING_ACCOUNT": "Bank account",
+            "CREDIT_CARD_NUMBER": "Creditcard number",
+            "CREDIT_CARD_VALIDITY": "Validity",
+            "PAYPAL_ACCOUNT": "Paypal account",
+            "VEHICLE": "Vehicle",
+            "VEHICLE_MODEL": "Model",
+            "VEHICLE_YEAR": "Year",
+            "SAVE": "Save"
+        }
+    },
+    "ENUMS": {
+
+    },
+    "ERRORS": {
+        "LASTNAME_REQUIRED": "Nom de famille requis.",
+        "FIRSTNAME_REQUIRED": "Prénom requis",
+        "EMAIL_REQUIRED": "Email required.",
+        "EMAIL_INVALID": "Invalid email.",
+        "PASSWORD_REQUIRED": "Password required.",
+        "PASSWORD_MIN_SIZE": "Minimum 8 characters.",
+        "ACCOUNT_TYPE_REQUIRED": "Account type required",
+        "ADDRESS_REQUIRED": "Address required",
+        "ADDRESS_INVALID": "Invalid address",
+        "COUNTRY_REQUIRED": "Country required",
+        "ZIP_REQUIRED": "Zip code required",
+        "ZIP_INVALID": "Invalid zip code",
+        "BANKING_ACCOUNT_REQUIRED": "Bank account required",
+        "BANKING_ACCOUNT_INVALID": "Invalid banking account",
+        "CREDIT_CARD_REQUIRED": "Credit card required",
+        "CREDIT_CARD_INVALID": "Invalid credit card",
+        "CREDIT_CARD_VALIDITY_REQUIRED": "Validity required",
+        "CREDIT_CARD_VALIDITY_INVALID": "Wrong validity",
+        "PAYPAL_REQUIRED": "Paypal account required",
+        "VEHICLE_MODEL_REQUIRED": "Vehicle model required",
+        "VEHICLE_MODEL_INVALID": "Invalid vehicle model",
+        "VEHICLE_YEAR_REQUIRED": "Year required",
+        "VEHICLE_YEAR_INVALID": "Invalid year"
+    }
+}

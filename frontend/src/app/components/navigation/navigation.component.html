@@ -1,0 +1,64 @@
+<!-- Navbar content -->
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li *ngIf="(authService.isConnected() | async) === false" class="nav-item">
+                <a routerLinkActive="active" routerLink="/home"
+                    class="nav-link">{{ 'COMPONENTS.NAVIGATION.HOME' | translate }}</a>
+            </li>
+            <li class="nav-item">
+                <a routerLinkActive="active" routerLink="/products/offers"
+                    class="nav-link">{{ 'COMPONENTS.NAVIGATION.PRODUCTS_OFFERS' | translate }}</a>
+            </li>
+            <li class="nav-item">
+                <a routerLinkActive="active" routerLink="/products/delivery"
+                    class="nav-link">{{ 'COMPONENTS.NAVIGATION.PRODUCTS_DELIVERY' | translate }}</a>
+            </li>
+            <ng-container class="navbar-nav mr-auto" *ngIf="authService.isConnected() | async">
+                <li class="nav-item">
+                    <a routerLinkActive="active" routerLink="/create-product/offer"
+                        class="nav-link">{{ 'COMPONENTS.NAVIGATION.CREATE_OFFER' | translate }}</a>
+                </li>
+                <li class="nav-item" *ngIf="userRoleLivreur">
+                    <a routerLinkActive="active" routerLink="/create-product/delivery"
+                        class="nav-link">{{ 'COMPONENTS.NAVIGATION.CREATE_DELIVERY' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLinkActive="active" routerLink="/my-products"
+                        class="nav-link">{{ 'COMPONENTS.NAVIGATION.MY_PRODUCTS' | translate }}</a>
+                </li>
+                <li class="nav-item">
+                    <a routerLinkActive="active" routerLink="/my-mails"
+                        class="nav-link">{{ 'COMPONENTS.NAVIGATION.MY_MAILS' | translate }}</a>
+                </li>
+            </ng-container>
+        </ul>
+    </div>
+    <ul class="navbar-nav mr-auto">
+        <ng-container *ngIf="authService.isConnected() | async">
+            <li class="nav-item">
+                <a routerLinkActive="active" routerLink="/profile"
+                    class="nav-link">{{ 'COMPONENTS.NAVIGATION.PROFILE' | translate }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="cursor: pointer;"
+                    (click)="logout()">{{ 'COMPONENTS.NAVIGATION.LOGOUT' | translate }}</a>
+            </li>
+        </ng-container>
+        <ng-container *ngIf="!(authService.isConnected() | async)">
+            <li class="nav-item">
+                <a routerLinkActive="active" routerLink="/login"
+                    class="nav-link">{{ 'COMPONENTS.NAVIGATION.LOGIN' | translate }}</a>
+            </li>
+            <li class="nav-item">
+                <a routerLinkActive="active" routerLink="/register"
+                    class="nav-link">{{ 'COMPONENTS.NAVIGATION.REGISTER' | translate }}</a>
+            </li>
+        </ng-container>
+        <li class="nav-item active">
+            <a class="nav-link" style="cursor: pointer;" (click)="switchLang()">
+                {{ ('COMPONENTS.NAVIGATION.LOCALE.' + otherLang) | translate }}
+            </a>
+        </li>
+    </ul>
+</nav>

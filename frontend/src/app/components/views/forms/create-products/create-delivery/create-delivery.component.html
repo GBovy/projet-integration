@@ -1,0 +1,244 @@
+<div class="container">
+    <form [formGroup]="form">
+        <h1>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.TITLE' | translate }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <app-maps (ride)="rideChange($event)" [startingAddress]="startingAddress"
+                    [endingAddress]="endingAddress">
+                </app-maps>
+                <div class="form-row">
+                    <table *ngIf="calculated">
+                        <tr>
+                            <th>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.DISTANCE' | translate }}</th>
+                            <th>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.DURATION' | translate }}</th>
+                            <th>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ASKED_PRICE' | translate }}</th>
+                            <!-- <th>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ESTIMATED_RIDE' | translate }}</th> -->
+                            <th>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ASKED_COMMISSION' | translate }}</th>
+                            <!-- <th>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.GAIN' | translate }}</th> -->
+                        </tr>
+                        <tr>
+                            <td>{{ form.get(DeliveryProperties.DISTANCE).value.toFixed(2) }}{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.KM' | translate }}
+                            </td>
+                            <td>{{ form.get(DeliveryProperties.DURATION).value.toFixed(2) }}{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.MIN' | translate }}
+                            </td>
+                            <td>{{ calculated?.price }} €</td>
+                            <!-- <td>{{ calculated?.rideCost }}</td> -->
+                            <td>{{ calculated?.commission }} €</td>
+                            <!-- <td>{{ calculated?.totalGain }}</td> -->
+                        </tr>
+                    </table>
+                    <div *ngIf="calculated" class="invalid-feedback">
+                        <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.MIN_PRICE' | translate }}{{ calculated.minimumPrice }}{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.MAX_PRICE' | translate }}{{ calculated.maximumPrice }}
+                            €</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <h6>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.STARTING_POINT' | translate }}</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label [for]="DeliveryProperties.DELIVERY_DATE">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.RIDE_DATE' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="DeliveryProperties.DELIVERY_DATE"
+                                [formControlName]="DeliveryProperties.DELIVERY_DATE"
+                                [placeholder]="'COMPONENTS.PRODUCTS.CREATE_DELIVERY.PLACEHOLDER_DATE' | translate" />
+                        </div>
+                        <div *ngIf="isInvalidControl(DeliveryProperties.DELIVERY_DATE)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.DATE' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label [for]="StartAddressProperties.ADDRESS">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ADDRESS' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="StartAddressProperties.ADDRESS"
+                                [formControlName]="StartAddressProperties.ADDRESS" placeholder="Rue Neuve 9" />
+                        </div>
+                        <div *ngIf="isInvalidControl(StartAddressProperties.ADDRESS)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.STARTING_ADDRESS' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label [for]="StartAddressProperties.ZIP_CODE">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ZIP_CODE' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="StartAddressProperties.ZIP_CODE"
+                                [formControlName]="StartAddressProperties.ZIP_CODE" placeholder="1000" />
+                        </div>
+                        <div *ngIf="isInvalidControl(StartAddressProperties.ZIP_CODE)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.ZIP_CODE' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label [for]="StartAddressProperties.CITY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.CITY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="StartAddressProperties.CITY"
+                                [formControlName]="StartAddressProperties.CITY" placeholder="Bruxelles" />
+                        </div>
+                        <div *ngIf="isInvalidControl(StartAddressProperties.CITY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.CITY' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label [for]="StartAddressProperties.COUNTRY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.COUNTRY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="StartAddressProperties.COUNTRY"
+                                [formControlName]="StartAddressProperties.COUNTRY" placeholder="Belgique" />
+                        </div>
+                        <div *ngIf="isInvalidControl(StartAddressProperties.COUNTRY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.COUNTRY' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <h6>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ENDING_POINT' | translate }}</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label [for]="EndAddressProperties.ADDRESS">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ADDRESS' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="EndAddressProperties.ADDRESS"
+                                [formControlName]="EndAddressProperties.ADDRESS" placeholder="Quai Mativa 62" />
+                        </div>
+                        <div *ngIf="isInvalidControl(EndAddressProperties.ADDRESS)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.ENDING_ADDRESS' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label [for]="EndAddressProperties.ZIP_CODE">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ZIP_CODE' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="EndAddressProperties.ZIP_CODE"
+                                [formControlName]="EndAddressProperties.ZIP_CODE" placeholder="4020" />
+                        </div>
+                        <div *ngIf="isInvalidControl(EndAddressProperties.ZIP_CODE)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.ZIP_CODE' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label [for]="EndAddressProperties.CITY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.CITY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="EndAddressProperties.CITY"
+                                [formControlName]="EndAddressProperties.CITY" placeholder="Liège" />
+                        </div>
+                        <div *ngIf="isInvalidControl(EndAddressProperties.CITY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.CITY' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label [for]="EndAddressProperties.COUNTRY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.COUNTRY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="EndAddressProperties.COUNTRY"
+                                [formControlName]="EndAddressProperties.COUNTRY" placeholder="Belgique" />
+                        </div>
+                        <div *ngIf="isInvalidControl(EndAddressProperties.COUNTRY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.COUNTRY' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h6>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.DETAILS' | translate }}</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label [for]="DeliveryProperties.MAX_VOLUME">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.MAX_VOLUME' | translate }}</span>
+                        </label>
+                        <app-input-currency [formControlName]="DeliveryProperties.MAX_VOLUME"
+                            [id]="DeliveryProperties.MAX_VOLUME"></app-input-currency>
+                        <div *ngIf="isInvalidControl(DeliveryProperties.MAX_VOLUME)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.MAX_VOLUME' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label [for]="DeliveryProperties.MAX_MASS">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.MAX_MASS' | translate }}</span>
+                        </label>
+                        <app-input-currency [formControlName]="DeliveryProperties.MAX_MASS"
+                            [id]="DeliveryProperties.MAX_MASS"></app-input-currency>
+                        <div *ngIf="isInvalidControl(DeliveryProperties.MAX_MASS)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.MAX_MASS' | translate }}</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label [for]="DeliveryProperties.PRICE">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.PRICING' | translate }}</span>
+                        </label>
+                        <app-input-currency [formControlName]="DeliveryProperties.PRICE"
+                            [id]="DeliveryProperties.PRICE"></app-input-currency>
+                        <div *ngIf="isInvalidControl(DeliveryProperties.PRICE)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.MIN_PRICING' | translate }}{{ calculated.minimumPrice }}{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.MAX_PRICING' | translate }}{{ calculated.maximumPrice }}
+                                € .</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="button-row" *ngIf="!(previewed$ | async)">
+                        <button mat-flat-button type="button" class="btn btn-primary" [disabled]="!form.valid"
+                            color="primary" (click)="preview()">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.PREVIEW' | translate }}</span>
+                        </button>
+                    </div>
+                    <div class="button-row" *ngIf="previewed$ | async">
+                        <button mat-flat-button type="button" class="btn btn-primary" color="primary"
+                            (click)="refresh()">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.RESET' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label [for]="DeliveryProperties.COMMENT">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.COMMENT' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="DeliveryProperties.COMMENT"
+                                [formControlName]="DeliveryProperties.COMMENT"
+                                [placeholder]="'COMPONENTS.PRODUCTS.CREATE_DELIVERY.PLACEHOLDER_INTRODUCE_COMMENT' | translate" />
+                        </div>
+                        <div *ngIf="isInvalidControl(DeliveryProperties.COMMENT)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ERROR.COMMENT_MAX_LENGTH' | translate }}</span>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <button mat-flat-button class="btn btn-primary" type="button" (click)="calculate()"
+                            [disabled]="!form.valid && !(previewed$ | async)" color="primary">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.CALCULATE_AGAIN' | translate }}</span>
+                        </button>
+                    </div>
+
+                    <div class="button-row">
+                        <button mat-flat-button class="btn btn-primary" type="button" (click)="onSubmit()"
+                            [disabled]="!form.valid && !(previewed$ | async)" color="primary">
+                            <span>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.SAVE' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

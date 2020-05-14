@@ -1,0 +1,30 @@
+<div class="drop-container" ngFileDrop [options]="options"
+    (uploadOutput)="onUploadOutput($event, fileName)" [uploadInput]="uploadInput"
+    [ngClass]="{ 'is-drag-over': dragOver }">
+    <p>
+        <img name="upload-files" src="\assets\images\utils\files.png"
+            alt="png pdf jpg" /><br />
+        {{ 'COMPONENTS.FILE_UPLOAD.DRAG_DROP' | translate }}<br />
+        <label class="upload-button">
+            <input type="file" ngFileSelect [options]="options"
+                (uploadOutput)="onUploadOutput($event, fileName)" [uploadInput]="uploadInput" />
+            {{ 'COMPONENTS.FILE_UPLOAD.BROWSE' | translate }}
+        </label> {{ 'COMPONENTS.FILE_UPLOAD.TO_UPLOAD' | translate
+            }}
+        <br /> {{ 'COMPONENTS.FILE_UPLOAD.FORMAT' | translate }}
+    </p>
+    <div class="upload-items">
+        <div class="upload-item" *ngFor="let f of files; let i = index;">
+            <span class="filename">
+                <span>{{ f?.name }} ({{ f?.id }}) -
+                    {{ f?.progress?.data?.percentage }}%</span>
+                <span>uploading with {{ f?.progress?.data?.speedHuman }}</span>
+                <span>ETA {{ f?.progress?.data?.etaHuman }}</span>
+            </span>
+            <div class="progress">
+                <span class="bar"
+                    [style.width]="f?.progress?.data?.percentage + '%'"></span>
+            </div>
+        </div>
+    </div>
+</div>

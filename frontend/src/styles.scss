@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../styles/main.scss';
+
+@import "~leaflet/dist/leaflet.css";
+
+.leaflet-top .leaflet-right {
+    max-width: 100px;
+    display: none !important;
+}
+
+.leaflet-routing-alternatives-container {
+    display: none !important;
+}
+
+.leaflet-control-container .leaflet-routing-container-hide  {
+    display: none !important;
+}
+
+.leaflet-bottom .leaflet-left {
+    display: none;
+}
+
+.leaflet-routing-container .leaflet-bar .leaflet-routing-collapsible .leaflet-control {
+    display: none;
+}

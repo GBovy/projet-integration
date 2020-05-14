@@ -1,0 +1,43 @@
+<!--
+<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div mat-dialog-content>
+    <p>What's your favorite animal?</p>
+    <mat-form-field>
+        <mat-label>Favorite Animal</mat-label>
+        <input matInput [(ngModel)]="data.animal">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+</div>
+ -->
+<h1 mat-dialog-title>Payer par carte de crédit</h1>
+<form novaliatde (ngSubmit)="buyAction()" [formGroup]="stripeForm">
+
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-label>Propriétaire de la carte</mat-label>
+            <input matInput type="text" [formControlName]="StripeFormProperties.NAME" placeholder="Jane Doe">
+
+        </mat-form-field>
+        <div *ngIf="isInvalidControl(StripeFormProperties.NAME)" class="invalid-feedback">
+            <span>Nom du propriétaire requis.</span>
+        </div>
+
+        <div id="card-element" class="field"></div>
+
+        <div *ngIf="errorMessage" class="invalid-feedback">
+            {{ errorMessage }}
+        </div>
+
+    </div>
+    <div mat-dialog-actions class="button-row" >
+        <button type="submit" class="btn btn-primary" color="primary" mat-flat-button >
+            Payer {{ data.amount }} €
+        </button>
+        <button type="button" (click)="closeModal()" class="btn btn-secondary" color="primary" mat-flat-button>
+            Annuler et fermer
+        </button>
+    </div>
+</form>

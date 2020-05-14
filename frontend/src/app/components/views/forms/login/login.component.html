@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="example-container mat-elevation-z8">
+
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        </div>
+
+        <mat-card class="example-card">
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit(form.value)">
+
+                <mat-form-field class="example-full-width">
+                    <input matInput type="email" [placeholder]="'COMPONENTS.LOGIN.EMAIL' | translate" formControlName="email"
+                        [errorStateMatcher]="matcher" />
+                    <mat-error *ngIf="isInvalidControl(FormProperties.EMAIL)">
+                            <span>{{ 'ERRORS.EMAIL_REQUIRED' | translate }}</span>
+                            <span>{{ 'ERRORS.EMAIL_INVALID' | translate }}</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <input matInput type="password" [placeholder]="'COMPONENTS.LOGIN.PASSWORD' | translate" formControlName="password"
+                        [errorStateMatcher]="matcher" />
+                    <mat-error *ngIf="isInvalidControl(FormProperties.PASSWORD)">
+                            <span>{{ 'ERRORS.PASSWORD_REQUIRED' | translate }}</span>
+                            <span>{{ 'ERRORS.PASSWORD_MIN' | translate }}</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="button-row">
+                    <button type="submit" [disabled]="!form.valid" mat-flat-button color="primary">
+                        {{ 'COMPONENTS.LOGIN.LOGIN' | translate }}
+                    </button>
+                </div>
+                <div class="button-row">
+                    <a mat-flat-button color="primary" routerLinkActive="active" routerLink="/register">
+                        {{ 'COMPONENTS.LOGIN.REGISTER' | translate }}
+                    </a>
+                </div>
+
+            </form>
+        </mat-card>
+
+        <a class="btn btn-block social-btn google" [href]="googleUrl">
+            <img src="../../../assets/images/google-logo.png" alt="Google" style="height: 40px" />
+             {{ 'COMPONENTS.LOGIN.LOGIN_WITH_GOOGLE' | translate }}
+        </a>
+        <a class="btn btn-block social-btn facebook" [href]="facebookUrl">
+            <img src="../../../assets/images/fb-logo.png" alt="Facebook" style="height: 40px" />
+             {{ 'COMPONENTS.LOGIN.LOGIN_WITH_FACEBOOK' | translate }}
+        </a>
+
+    </div>
+</div>

@@ -1,0 +1,227 @@
+<div class="container">
+  <form [formGroup]="form">
+    <h1>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.TITLE' | translate }}</h1>
+    <div class="row">
+          <div class="col-md-6">
+            <app-maps (ride)="rideChange($event)" [startingAddress]="startingAddress"
+              [endingAddress]="endingAddress">
+            </app-maps>
+            <div class="form-row">
+              
+              <table *ngIf="calculated">
+                  <tr>
+                      <th>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.VOLUME' | translate }}</th>
+                      <th>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.MASS' | translate }}</th>
+                      <th>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.ASKED_COMMISSION' | translate }}</th>
+                  </tr>
+                  <tr>
+                      <td>{{ (form.get(OfferProperties.VOLUME).value / 100).toFixed(2)}}{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.VOLUME_UNIT' | translate }}</td>
+                      <td>{{ (form.get(OfferProperties.MASS).value / 100).toFixed(2)}}{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.MASS_UNIT' | translate }}</td>
+                      <td>{{ calculated?.commission }}</td>
+                  </tr>
+              </table>
+            
+            </div>
+          </div>
+            <div class="col-md-6">
+
+              <h6>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.STARTING_POINT' | translate }}</h6>
+              
+              <div class="form-row">
+                <div class="form-group col-md-3">
+                  <label [for]="OfferProperties.DELIVERY_DATE">
+                    <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.RIDE_DATE' | translate }}</span>
+                  </label>
+                  <div class="textfield">
+                    <input class="textfield__field" type="text" [id]="OfferProperties.DELIVERY_DATE"
+                        [formControlName]="OfferProperties.DELIVERY_DATE"
+                        [placeholder]="'COMPONENTS.PRODUCTS.CREATE_OFFER.PLACEHOLDER_DATE' | translate" />
+                  </div>
+                  <div *ngIf="isInvalidControl(OfferProperties.DELIVERY_DATE)" class="invalid-feedback">
+                    <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-9">
+                  <label [for]="StartAddressProperties.ADDRESS">
+                      <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.ADDRESS' | translate }}</span>
+                  </label>
+                  <div class="textfield">
+                      <input class="textfield__field" type="text" [id]="StartAddressProperties.ADDRESS"
+                          [formControlName]="StartAddressProperties.ADDRESS" placeholder="Rue Neuve 9" />
+                  </div>
+                  <div *ngIf="isInvalidControl(StartAddressProperties.ADDRESS)" class="invalid-feedback">
+                      <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-5">
+                  <label [for]="StartAddressProperties.CITY">
+                      <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.CITY' | translate }}</span>
+                  </label>
+                  <div class="textfield">
+                      <input class="textfield__field" type="text" [id]="StartAddressProperties.CITY"
+                          [formControlName]="StartAddressProperties.CITY" placeholder="Bruxelles" />
+                  </div>
+                  <div *ngIf="isInvalidControl(StartAddressProperties.CITY)" class="invalid-feedback">
+                      <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label [for]="StartAddressProperties.ZIP_CODE">
+                      <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.ZIP_CODE' | translate }}</span>
+                  </label>
+                  <div class="textfield">
+                      <input class="textfield__field" type="text" [id]="StartAddressProperties.ZIP_CODE"
+                          [formControlName]="StartAddressProperties.ZIP_CODE" placeholder="1000" />
+                  </div>
+                  <div *ngIf="isInvalidControl(StartAddressProperties.ZIP_CODE)" class="invalid-feedback">
+                      <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label [for]="StartAddressProperties.COUNTRY">
+                      <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.COUNTRY' | translate }}</span>
+                  </label>
+                  <div class="textfield">
+                      <input class="textfield__field" type="text" [id]="StartAddressProperties.COUNTRY"
+                          [formControlName]="StartAddressProperties.COUNTRY" placeholder="Belgique" />
+                  </div>
+                  <div *ngIf="isInvalidControl(StartAddressProperties.COUNTRY)" class="invalid-feedback">
+                      <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                  </div>
+                </div>
+              </div>
+
+                <h6>{{ 'COMPONENTS.PRODUCTS.CREATE_DELIVERY.ENDING_POINT' | translate }}</h6>
+
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                      <label [for]="EndAddressProperties.ADDRESS">
+                          <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.ADDRESS' | translate }}</span>
+                      </label>
+                      <div class="textfield">
+                          <input class="textfield__field" type="text" [id]="EndAddressProperties.ADDRESS"
+                              [formControlName]="EndAddressProperties.ADDRESS" placeholder="Quai Mativa 62" />
+                      </div>
+                      <div *ngIf="isInvalidControl(EndAddressProperties.ADDRESS)" class="invalid-feedback">
+                          <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                      </div>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                      <label [for]="EndAddressProperties.CITY">
+                          <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.CITY' | translate }}</span>
+                      </label>
+                      <div class="textfield">
+                          <input class="textfield__field" type="text" [id]="EndAddressProperties.CITY"
+                              [formControlName]="EndAddressProperties.CITY" placeholder="Liège" />
+                      </div>
+                      <div *ngIf="isInvalidControl(EndAddressProperties.CITY)" class="invalid-feedback">
+                          <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label [for]="EndAddressProperties.ZIP_CODE">
+                        <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.ZIP_CODE' | translate }}</span>
+                    </label>
+                    <div class="textfield">
+                        <input class="textfield__field" type="text" [id]="EndAddressProperties.ZIP_CODE"
+                            [formControlName]="EndAddressProperties.ZIP_CODE" placeholder="4020" />
+                    </div>
+                    <div *ngIf="isInvalidControl(EndAddressProperties.ZIP_CODE)" class="invalid-feedback">
+                        <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                    </div>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label [for]="EndAddressProperties.COUNTRY">
+                        <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.COUNTRY' | translate }}</span>
+                    </label>
+                    <div class="textfield">
+                        <input class="textfield__field" type="text" [id]="EndAddressProperties.COUNTRY"
+                            [formControlName]="EndAddressProperties.COUNTRY" placeholder="Belgique" />
+                    </div>
+                    <div *ngIf="isInvalidControl(EndAddressProperties.COUNTRY)" class="invalid-feedback">
+                        <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                    </div>
+                </div>
+              </div>
+
+              <h6>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.DETAILS' | translate }}</h6>
+
+              <div class="form-row">
+                
+                <div class="form-group col-md-4">
+                
+                  <label [for]="OfferProperties.VOLUME">
+                      <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.VOLUME' | translate }}</span>
+                  </label>
+                  <app-input-currency [formControlName]="OfferProperties.VOLUME"
+                      [id]="OfferProperties.VOLUME"></app-input-currency>
+                  <div *ngIf="isInvalidControl(OfferProperties.VOLUME)" class="invalid-feedback">
+                      <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                  </div>
+                
+                </div>
+              
+                <div class="form-group col-md-4">
+                  
+                  <label [for]="OfferProperties.MASS">
+                      <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.MASS' | translate }}</span>
+                  </label>
+                  <app-input-currency [formControlName]="OfferProperties.MASS"
+                      [id]="OfferProperties.MASS"></app-input-currency>
+                  <div *ngIf="isInvalidControl(OfferProperties.MASS)" class="invalid-feedback">
+                      <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                  </div>
+                
+                </div>
+                <div class="form-group col-md-4">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label [for]="OfferProperties.COMMENT">
+                        <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.COMMENT' | translate }}</span>
+                    </label>
+                    <div class="textfield">
+                        <input class="textfield__field" type="text" [id]="OfferProperties.COMMENT"
+                            [formControlName]="OfferProperties.COMMENT"
+                            [placeholder]="'COMPONENTS.PRODUCTS.CREATE_OFFER.PLACEHOLDER_INTRODUCE_COMMENT' | translate" />
+                    </div>
+                    <div *ngIf="isInvalidControl(OfferProperties.COMMENT)" class="invalid-feedback">
+                        <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                    </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="button-row">
+                    <button mat-flat-button class="btn btn-primary" [disabled]="!previewed$ | async"
+                      color="primary" (click)="refresh()">
+                      <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.RESET' | translate }}</span>
+                    </button>
+                    
+                    <button mat-flat-button class="btn btn-primary" [disabled]="!form.valid" color="primary"
+                        (click)="preview()">
+                        <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.PREVIEW' | translate }}</span>
+                    </button>
+
+                    <button mat-flat-button class="btn btn-primary" type="button" (click)="calculate()"
+                        [disabled]="!form.valid && !(previewed$ | async)" color="primary">
+                        <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.CALCULATE_AGAIN' | translate }}</span>
+                    </button>
+        
+                    <button mat-flat-button class="btn btn-primary" type="button" (click)="onSubmit()"
+                        [disabled]="!form.valid && !(previewed$ | async)" color="primary">
+                        <span>{{ 'COMPONENTS.PRODUCTS.CREATE_OFFER.SAVE' | translate }}</span>
+                    </button>
+                </div>
+              </div>
+        </div>
+      </div>
+  </form>
+</div>

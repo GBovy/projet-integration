@@ -1,0 +1,29 @@
+.map-container {
+    max-width: 650px;
+    max-height: 650px;
+    min-width: 200px;
+    min-height: 200px;
+    height: 92%;
+    margin: 30px;
+}
+
+.leaflet-top .leaflet-right {
+    max-width: 100px;
+    display: none !important;
+}
+
+.leaflet-routing-alternatives-container {
+    display: none !important;
+}
+
+.leaflet-control-container .leaflet-routing-container-hide  {
+    display: none !important;
+}
+
+.leaflet-bottom .leaflet-left {
+    display: none;
+}
+
+.leaflet-routing-container .leaflet-bar .leaflet-routing-collapsible .leaflet-control {
+    display: none;
+}

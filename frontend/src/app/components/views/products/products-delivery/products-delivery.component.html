@@ -1,0 +1,69 @@
+<div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+        <input type="text" class="col-md-4 form-control" [id]="FormProperties.STARTING_CITY"
+            [formControlName]="FormProperties.STARTING_CITY" [placeholder]="'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.PLACEHOLDER.STARTING_CITY' | translate"/>
+        <input type="text" class="col-md-4 form-control" [id]="FormProperties.ENDING_CITY"
+            [formControlName]="FormProperties.ENDING_CITY" [placeholder]="'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.PLACEHOLDER.ENDING_CITY' | translate"/>
+        <button type="submit" mat-flat-button color="primary">
+            {{ 'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.SEARCH' | translate }}
+        </button>
+    </form>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="rides" class="example-table">
+
+            <!-- Starting Column -->
+            <ng-container matColumnDef="startingCity">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.STARTING_CITY' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{row.startingCity}}</td>
+            </ng-container>
+
+            <!-- Destination Column -->
+            <ng-container matColumnDef="destinationCity">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.DESTINATION_CITY' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{row.destinationCity}}</td>
+            </ng-container>
+
+            <!-- Mass Column -->
+            <ng-container matColumnDef="maxMass">
+                <th mat-header-cell *matHeaderCellDef>{{ 'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.MAX_MASS' | translate }}
+                </th>
+                <td mat-cell *matCellDef="let row">{{row.maxMass}} kg</td>
+            </ng-container>
+
+            <!-- Volume Column -->
+            <ng-container matColumnDef="maxVolume">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.MAX_VOLUME' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{row.maxVolume}} L</td>
+            </ng-container>
+
+            <!-- Delivery man ID Column -->
+            <ng-container matColumnDef="deliveryManID">
+                <th mat-header-cell *matHeaderCellDef>
+                    {{ 'COMPONENTS.PRODUCTS.PRODUCTS_DELIVERY.ID_LIVREUR' | translate }}</th>
+                <td mat-cell *matCellDef="let row">{{row.userUuid}}</td>
+            </ng-container>
+
+            <!-- Order Column -->
+            <ng-container matColumnDef="orderButton">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td *matCellDef="let row">
+                    <a color="primary" [routerLink]="['/order/delivery', row.id]">
+                        {{ 'COMPONENTS.PRODUCTS.ORDER' | translate }}
+                    </a>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+</div>

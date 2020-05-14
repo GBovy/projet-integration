@@ -1,0 +1,231 @@
+<div class="container" *ngIf="form">
+    <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+        <h1>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.TITLE' | translate }}</h1>
+        <h2>{{ ride?.startingZipCode }} {{ ride?.startingCity }} - {{ ride?.destinationZipCode }}
+            {{ ride?.destinationCity }}
+        </h2>
+        <div class="row">
+            <div class="col-md-6">
+                <app-maps (ride)="rideChange($event)" [startingAddress]="startingAddress"
+                    [endingAddress]="endingAddress">
+                </app-maps>
+                <div class="form-row">
+                    <table *ngIf="calculated">
+                        <tr>
+                            <th>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.DISTANCE' | translate }}</th>
+                            <!-- <th>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.MIN_PRICE' | translate }}</th>
+                            <th>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.MAX_PRICE' | translate }}</th> -->
+                            <th>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.PRICE' | translate }}</th>
+                        </tr>
+                        <tr>
+                            <td>{{ form.get(OrderProperties.DURATION).value.toFixed(2) }}{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.KM' | translate }}
+                            </td>
+                            <!-- <td>{{ calculated?.minimumPrice.toFixed(2) }} €</td>
+                            <td>{{ calculated?.maximumPrice.toFixed(2) }} €</td> -->
+                            <td>{{ (ride?.price) }} €</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h6>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.PICK_UP_ADDRESS' | translate }}</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label [for]="PickUpAddressProperties.DATE">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.DATE' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="PickUpAddressProperties.DATE"
+                                [formControlName]="PickUpAddressProperties.DATE" placeholder="jj/mm/aaaa" />
+                        </div>
+                        <div *ngIf="isInvalidControl(PickUpAddressProperties.DATE)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.DATE' | translate }}{{ ride.deliveryDate }}.</span>
+                        </div>
+
+                    </div>
+                    <div class="form-group col-md-9">
+                        <label [for]="PickUpAddressProperties.ADDRESS">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ADDRESS' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="PickUpAddressProperties.ADDRESS"
+                                [formControlName]="PickUpAddressProperties.ADDRESS" placeholder="Rue Neuve 9" />
+                        </div>
+                        <div *ngIf="isInvalidControl(PickUpAddressProperties.ADDRESS)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.ADDRESS' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label [for]="PickUpAddressProperties.ZIP_CODE">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ZIP_CODE' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="PickUpAddressProperties.ZIP_CODE"
+                                [formControlName]="PickUpAddressProperties.ZIP_CODE" placeholder="1000" />
+                        </div>
+                        <div *ngIf="isInvalidControl(PickUpAddressProperties.ZIP_CODE)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.ZIP_CODE' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label [for]="PickUpAddressProperties.CITY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.CITY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="PickUpAddressProperties.CITY"
+                                [formControlName]="PickUpAddressProperties.CITY" placeholder="Bruxelles" />
+                        </div>
+                        <div *ngIf="isInvalidControl(PickUpAddressProperties.CITY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.CITY' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label [for]="PickUpAddressProperties.COUNTRY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.COUNTRY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="PickUpAddressProperties.COUNTRY"
+                                [formControlName]="PickUpAddressProperties.COUNTRY" placeholder="Belgique" />
+                        </div>
+                        <div *ngIf="isInvalidControl(PickUpAddressProperties.COUNTRY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.COUNTRY' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <h6>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.DELIVERY_ADDRESS' | translate }}</h6>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label [for]="DeliveryAddressProperties.ADDRESS">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ADDRESS' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="DeliveryAddressProperties.ADDRESS"
+                                [formControlName]="DeliveryAddressProperties.ADDRESS" placeholder="Quai Mativa 62" />
+                        </div>
+                        <div *ngIf="isInvalidControl(DeliveryAddressProperties.ADDRESS)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.DELIVERY_ADDRESS' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label [for]="DeliveryAddressProperties.ZIP_CODE">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ZIP_CODE' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="DeliveryAddressProperties.ZIP_CODE"
+                                [formControlName]="DeliveryAddressProperties.ZIP_CODE" placeholder="4020" />
+                        </div>
+                        <div *ngIf="isInvalidControl(DeliveryAddressProperties.ZIP_CODE)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.ZIP_CODE' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label [for]="DeliveryAddressProperties.CITY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.CITY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="DeliveryAddressProperties.CITY"
+                                [formControlName]="DeliveryAddressProperties.CITY" placeholder="Liège" />
+                        </div>
+                        <div *ngIf="isInvalidControl(DeliveryAddressProperties.CITY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.CITY' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label [for]="DeliveryAddressProperties.COUNTRY">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.COUNTRY' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="DeliveryAddressProperties.COUNTRY"
+                                [formControlName]="DeliveryAddressProperties.COUNTRY" placeholder="Belgique" />
+                        </div>
+                        <div *ngIf="isInvalidControl(DeliveryAddressProperties.COUNTRY)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.COUNTRY' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label [for]="OrderProperties.PACKAGE_VOLUME">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.VOLUME' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <app-input-currency class="textfield__field" type="text"
+                                [id]="OrderProperties.PACKAGE_VOLUME"
+                                [formControlName]="OrderProperties.PACKAGE_VOLUME"></app-input-currency>
+                        </div>
+                        <div *ngIf="isInvalidControl(OrderProperties.PACKAGE_VOLUME)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.MAX_VOLUME' | translate }}{{ ride.maxVolume }}.</span>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+
+                        <label [for]="OrderProperties.PACKAGE_MASS">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.MASS' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <app-input-currency class="textfield__field" type="text" [id]="OrderProperties.PACKAGE_MASS"
+                                [formControlName]="OrderProperties.PACKAGE_MASS"></app-input-currency>
+                        </div>
+                        <div *ngIf="isInvalidControl(OrderProperties.PACKAGE_MASS)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.MAX_MASS' | translate }}{{ ride.maxMass }}.</span>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="button-row" *ngIf="!(previewed$ | async)">
+                        <button mat-flat-button type="button" class="btn btn-primary" [disabled]="!form.valid"
+                            color="primary" (click)="preview()">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.PREVIEW' | translate }}</span>
+                        </button>
+                    </div>
+                    <div class="button-row" *ngIf="previewed$ | async">
+                        <button mat-flat-button type="button" class="btn btn-primary" color="primary"
+                            (click)="refresh()">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.RESET' | translate }}</span>
+                        </button>
+                        <span class="invalid-feedback">{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.RESET_MESSAGE' | translate }}</span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+
+                        <label [for]="OrderProperties.COMMENT">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.COMMENT' | translate }}</span>
+                        </label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" [id]="OrderProperties.COMMENT"
+                                [formControlName]="OrderProperties.COMMENT"
+                                [placeholder]="'COMPONENTS.PRODUCTS.CREATE_DELIVERY.PLACEHOLDER_INTRODUCE_COMMENT' | translate" />
+                        </div>
+                        <div *ngIf="isInvalidControl(OrderProperties.COMMENT)" class="invalid-feedback">
+                            <span>{{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.COMMENT_MAX_LENGTH' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="button-row">
+                        <button type="submit" class="btn btn-primary" [disabled]="!form.valid" mat-flat-button
+                            color="primary">
+                            {{ 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ORDER' | translate }}
+                        </button>
+                    </div>
+                </div>
+                <div class="invalid-feedback">
+                    {{ !this.form.get(OrderProperties.DISTANCE).valid ?
+                        (( 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.MAX_DISTANCE_START' | translate) + ride.distance + ( 'COMPONENTS.PRODUCTS.ORDER_DELIVERY.ERROR.MAX_DISTANCE_END' | translate) + ride.maximumDistance + ' Km.')  : '' }}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

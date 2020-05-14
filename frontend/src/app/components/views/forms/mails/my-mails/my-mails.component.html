@@ -1,0 +1,46 @@
+<div class="container">
+    <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+        <div class="form-group col-md-12">
+           
+                       
+            <label [for]="MailsProperties.RECEIVER">
+                <span>{{ 'COMPONENTS.MAILS.RECEIVER' | translate }}</span>
+            </label>
+            <div class="textfield">
+                    <input class="textfield__field" type="text" [id]="MailsProperties.RECEIVER"
+                        [formControlName]="MailsProperties.RECEIVER"
+                    />
+            </div>
+            <div *ngIf="isInvalidControl(MailsProperties.RECEIVER)" class="invalid-feedback">
+                <span>{{ 'COMPONENTS.MAILS.ERROR.RECEIVER' | translate }}</span>
+            </div>
+
+            <label [for]="MailsProperties.SUBJECT">
+                <span>{{ 'COMPONENTS.MAILS.SUBJECT' | translate }}</span>
+            </label>
+            <div class="textfield">
+                <input class="textfield__field" type="text" [id]="MailsProperties.SUBJECT"
+                    [formControlName]="MailsProperties.SUBJECT"
+                />
+            </div>
+        
+            <label [for]="MailsProperties.MESSAGE">
+                <span>{{ 'COMPONENTS.MAILS.MESSAGE' | translate }}</span>
+            </label>
+            <div class="textfield">
+                <textarea  class="textfield__area" type="text" [id]="MailsProperties.MESSAGE"
+                    [formControlName]="MailsProperties.MESSAGE"
+                ></textarea>
+            </div>
+
+            <button class="btn btn-primary" (click)="sendMail()" [disabled]="!form.valid && !(sended$ | async)">
+                <span>envoyer</span>
+            </button>
+        </div>
+    </form>
+</div>
+            <!--
+            <div class="textfield">
+                <textarea class="textfield__field" type="text" [id]="MailsProperties.MESSAGE" [formControlName]="MailsProperties.MESSAGE"></textarea>
+            </div>
+            -->

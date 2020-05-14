@@ -1,0 +1,6 @@
+<form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+    <h1>Valider la commande</h1>
+    <input type="text" placeholder="Saisissez le code de livraison" formControlName="code" />
+    <textarea placeholder="Commentaire..." formControlName="comments"></textarea>
+    <button type="submit" [disabled]="!form.valid">Valider la livraison</button>
+</form>

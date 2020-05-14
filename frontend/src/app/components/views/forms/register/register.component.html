@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="example-container mat-elevation-z8">
+
+        <div class="example-loading-shade" *ngIf="isLoadingResults">
+            <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+        </div>
+
+        <mat-card class="example-card">
+            <form [formGroup]="form" (ngSubmit)="onFormSubmit(form.value)">
+
+                <mat-form-field class="example-full-width">
+                    <input matInput type="text" [placeholder]="'COMPONENTS.REGISTER.FIRSTNAME' | translate"
+                        [formControlName]="FormProperties.FIRST_NAME" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="isInvalidControl(FormProperties.FIRST_NAME)">
+                        <span>Please enter your Firstname</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <input matInput type="text" [placeholder]="'COMPONENTS.REGISTER.LASTNAME' | translate"
+                        [formControlName]="FormProperties.LAST_NAME" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="isInvalidControl(FormProperties.LAST_NAME)">
+                        <span>Please enter your Lastname</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <input matInput type="email" [placeholder]="'COMPONENTS.REGISTER.PASSWORD' | translate"
+                        [formControlName]="FormProperties.EMAIL" [errorStateMatcher]="matcher">
+                    <mat-error *ngIf="isInvalidControl(FormProperties.EMAIL)">
+                        <span>{{ 'ERRORS.EMAIL_REQUIRED' | translate }}</span>
+                        <span>{{ 'ERRORS.EMAIL_INVALID' | translate }}</span>
+                    </mat-error>
+                </mat-form-field>
+                <div [formGroupName]="FormProperties.PASSWORD_GROUP">
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="password" [placeholder]="'COMPONENTS.REGISTER.PASSWORD' | translate"
+                            [formControlName]="FormProperties.PASSWORD" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="isInvalidGroup(FormProperties.PASSWORD_GROUP, FormProperties.PASSWORD)">
+                            <span>{{ 'ERRORS.PASSWORD_REQUIRED' | translate }}</span>
+                            <span>{{ 'ERRORS.PASSWORD_MIN_SIZE' | translate }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                        <input matInput type="password"
+                            [placeholder]="'COMPONENTS.REGISTER.CONFIRM_PASSWORD' | translate"
+                            [formControlName]="FormProperties.CONFIRM_PASSWORD" [errorStateMatcher]="matcher">
+                        <mat-error
+                            *ngIf="isInvalidGroup(FormProperties.PASSWORD_GROUP, FormProperties.CONFIRM_PASSWORD)">
+                            <span>{{ 'ERRORS.PASSWORD_REQUIRED' | translate }}</span>
+                            <span>{{ 'ERRORS.PASSWORD_MIN_SIZE' | translate }}</span>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="button-row">
+                    <button type="submit" [disabled]="!form.valid" mat-flat-button color="primary">
+                        {{ 'COMPONENTS.REGISTER.REGISTER' | translate }}
+                    </button>
+                </div>
+
+            </form>
+        </mat-card>
+
+        <a class="btn btn-block social-btn google" [href]="googleUrl">
+            <img src="../../../assets/images/google-logo.png" alt="Google" style="height: 40px" />
+            {{ 'COMPONENTS.REGISTER.REGISTER_GOOGLE' | translate }}
+        </a>
+        <a class="btn btn-block social-btn facebook" [href]="facebookUrl">
+            <img src="../../../assets/images/fb-logo.png" alt="Facebook" style="height: 40px" />
+            {{ 'COMPONENTS.REGISTER.REGISTER_FACEBOOK' | translate }}
+        </a>
+
+    </div>
+</div>

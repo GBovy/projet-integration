@@ -1,0 +1,260 @@
+<div class="container">
+    <div class="example-container mat-elevation-z8">
+
+        <mat-card class="example-card">
+            <div *ngIf="!isProfileCompleted" class="py-5 text-center">
+                <p class="lead">
+                    {{ 'COMPONENTS.PROFILE.IS_NOT_COMPLETED' | translate }}
+                </p>
+            </div>
+            <h2>{{ 'COMPONENTS.PROFILE.TITLE' | translate }}</h2>
+            <form name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label [for]="ProfileProperties.LAST_NAME">{{ 'COMPONENTS.PROFILE.LASTNAME' | translate }}</label>
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" class="form-control"
+                                [id]="ProfileProperties.LAST_NAME" [formControlName]="ProfileProperties.LAST_NAME"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.LAST_NAME))}" required />
+                        </div>
+                        <div *ngIf="isInvalidControl(ProfileProperties.LAST_NAME)" class="invalid-feedback">
+                            <span>{{ 'ERRORS.LASTNAME_REQUIRED' | translate }}</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label
+                            [for]="ProfileProperties.FIRST_NAME">{{ 'COMPONENTS.PROFILE.FIRSTNAME' | translate }}</label>
+
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" class="form-control"
+                                [id]="ProfileProperties.FIRST_NAME" [formControlName]="ProfileProperties.FIRST_NAME"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.FIRST_NAME))}" required />
+                        </div>
+
+                        <div *ngIf="isInvalidControl(ProfileProperties.FIRST_NAME)" class="invalid-feedback">
+                            {{ 'ERRORS.FIRSTNAME_REQUIRED' | translate }}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label [for]="ProfileProperties.EMAIL">{{ 'COMPONENTS.PROFILE.EMAIL' | translate }}</label>
+
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" class="form-control"
+                                [id]="ProfileProperties.EMAIL" [formControlName]="ProfileProperties.EMAIL"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.EMAIL))}" /></div>
+                        <div *ngIf="(isInvalidControl(ProfileProperties.EMAIL))" class="invalid-feedback">
+
+                            {{ 'ERRORS.EMAIL_REQUIRED' | translate }}
+                            {{ 'ERRORS.EMAIL_INVALID' | translate }}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label
+                            [for]="ProfileProperties.ROLE">{{ 'COMPONENTS.PROFILE.ACCOUNT_TYPE' | translate }}</label>
+                        <select class="form-control" [id]="ProfileProperties.ROLE"
+                            [formControlName]="ProfileProperties.ROLE"
+                            [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.ROLE))}">
+                            <option value=""></option>
+                            <option *ngFor="let role of UserRoleEnum | keyvalue" [value]="role.key">
+                                {{ 'ENUMS.ROLE.' + role.key | translate }}</option>
+                        </select>
+                        <div *ngIf="isInvalidControl(ProfileProperties.ROLE)" class="invalid-feedback">
+
+                            {{ 'ERRORS.ACCOUNT_TYPE_REQUIRED' | translate }}
+                        </div>
+                    </div>
+                    <ng-container [formGroupName]="ProfileProperties.PASSWORD_GROUP">
+                        <div class="form-group col-md-6">
+                            <label
+                                [for]="ProfileProperties.PASSWORD">{{ 'COMPONENTS.PROFILE.PASSWORD' | translate }}</label>
+
+                            <div class="textfield">
+                                <input class="textfield__field" type="password" class="form-control"
+                                    [id]="ProfileProperties.PASSWORD" [formControlName]="ProfileProperties.PASSWORD"
+                                    [ngClass]="{'is-invalid': (isInvalidGroup(ProfileProperties.PASSWORD_GROUP, ProfileProperties.PASSWORD))}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label
+                                [for]="ProfileProperties.CONFIRM_PASSWORD">{{ 'COMPONENTS.PROFILE.CONFIRM_PASSWORD' | translate }}</label>
+
+                            <div class="textfield">
+                                <input class="textfield__field" type="password" class="form-control"
+                                    [id]="ProfileProperties.CONFIRM_PASSWORD"
+                                    [formControlName]="ProfileProperties.CONFIRM_PASSWORD"
+                                    [ngClass]="{'is-invalid': (isInvalidGroup(ProfileProperties.PASSWORD_GROUP, ProfileProperties.CONFIRM_PASSWORD))}" />
+                            </div>
+
+                            <div *ngIf="(isInvalidGroup(ProfileProperties.PASSWORD_GROUP, ProfileProperties.CONFIRM_PASSWORD)
+                        || isInvalidGroup(ProfileProperties.PASSWORD_GROUP, ProfileProperties.PASSWORD))"
+                                class="invalid-feedback">
+                                {{ 'ERRORS.PASSWORD_REQUIRED' | translate }}
+                                {{ 'ERRORS.PASSWORD_MIN_SIZE' | translate }}
+                                {{ 'ERRORS.PASSWORD_GROUP' | translate }}
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label
+                                [for]="ProfileProperties.ADDRESS">{{ 'COMPONENTS.PROFILE.ADDRESS' | translate }}</label>
+
+                            <div class="textfield">
+                                <input class="textfield__field" type="text" class="form-control"
+                                    [id]="ProfileProperties.ADDRESS" [formControlName]="ProfileProperties.ADDRESS"
+                                    [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.ADDRESS))}" /></div>
+                            <div *ngIf="isInvalidControl(ProfileProperties.ADDRESS)" class="invalid-feedback">
+                                {{ 'ERRORS.ADDRESS_REQUIRED' | translate }}
+                                {{ 'ERRORS.ADDRESS_INVALID' | translate }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label [for]="ProfileProperties.ZIP">{{ 'COMPONENTS.PROFILE.ZIP' | translate }}</label>
+
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" class="form-control"
+                                [id]="ProfileProperties.ZIP" [formControlName]="ProfileProperties.ZIP"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.ZIP))}" /></div>
+                        <div *ngIf="isInvalidControl(ProfileProperties.ZIP)" class="invalid-feedback">
+                            {{ 'ERRORS.ZIP_REQUIRED' | translate }}
+                            {{ 'ERRORS.ZIP_INVALID' | translate }}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label [for]="ProfileProperties.CITY">{{ 'COMPONENTS.PROFILE.CITY' | translate }}</label>
+
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" class="form-control"
+                                [id]="ProfileProperties.CITY" [formControlName]="ProfileProperties.CITY"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.CITY))}" /></div>
+                        <div *ngIf="isInvalidControl(ProfileProperties.CITY)" class="invalid-feedback">
+                            {{ 'ERRORS.CITY_REQUIRED' | translate }}
+                            {{ 'ERRORS.CITY_INVALID' | translate }}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label [for]="ProfileProperties.COUNTRY">{{ 'COMPONENTS.PROFILE.COUNTRY' | translate }}</label>
+                        <select class="form-control" [id]="ProfileProperties.COUNTRY"
+                            [formControlName]="ProfileProperties.COUNTRY"
+                            [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.COUNTRY))}">
+                            <option value=""></option>
+                            <option *ngFor="let country of CountryEnum | keyvalue" [value]="country.key">
+                                {{ 'ENUMS.COUNTRY.' + country.key | translate }}</option>
+                        </select>
+                        <div *ngIf="isInvalidControl(ProfileProperties.COUNTRY)" class="invalid-feedback">
+                            {{ 'ERRORS.COUNTRY_REQUIRED' | translate }}
+
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label
+                            [for]="ProfileProperties.BANKING_ACCOUNT">{{ 'COMPONENTS.PROFILE.BANKING_ACCOUNT' | translate }}</label>
+
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" class="form-control"
+                                [id]="ProfileProperties.BANKING_ACCOUNT"
+                                [formControlName]="ProfileProperties.BANKING_ACCOUNT"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.BANKING_ACCOUNT))}" />
+                        </div>
+                        <div *ngIf="isInvalidControl(ProfileProperties.BANKING_ACCOUNT)" class="invalid-feedback">
+                            {{ 'ERRORS.BANKING_ACCOUNT_REQUIRED' | translate }}
+                            {{ 'ERRORS.BANKING_ACCOUNT_INVALID' | translate }}
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label
+                            [for]="ProfileProperties.PAYPAL">{{ 'COMPONENTS.PROFILE.PAYPAL_ACCOUNT' | translate }}</label>
+
+                        <div class="textfield">
+                            <input class="textfield__field" type="text" class="form-control"
+                                [id]="ProfileProperties.PAYPAL" [formControlName]="ProfileProperties.PAYPAL"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.PAYPAL))}" /></div>
+                        <div *ngIf="isInvalidControl(ProfileProperties.PAYPAL)" class="invalid-feedback">
+                            {{ 'ERRORS.PAYPAL_REQUIRED' | translate }}
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="isLivreur">
+                    <h2>{{ 'COMPONENTS.PROFILE.VEHICLE' | translate }}</h2>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label
+                                [for]="ProfileProperties.VEHICLE_MODEL">{{ 'COMPONENTS.PROFILE.VEHICLE_MODEL' | translate }}</label>
+                            <select class="form-control" [id]="ProfileProperties.VEHICLE_MODEL"
+                                [formControlName]="ProfileProperties.VEHICLE_MODEL"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.VEHICLE_MODEL))}">
+                                <option value=""></option>
+                                <option *ngFor="let model of VehicleModelEnum | keyvalue" [value]="model.key">
+                                    {{ 'ENUMS.VEHICLE_MODEL.' + model.key | translate }}</option>
+                            </select>
+                            <div *ngIf="isInvalidControl(ProfileProperties.VEHICLE_MODEL)" class="invalid-feedback">
+                                {{ 'ERRORS.VEHICLE_MODEL_REQUIRED' | translate }}
+                                {{ 'ERRORS.VEHICLE_MODEL_INVALID' | translate }}
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label
+                                [for]="ProfileProperties.VEHICLE_YEAR">{{ 'COMPONENTS.PROFILE.VEHICLE_YEAR' | translate }}</label>
+                            <select class="form-control" [id]="ProfileProperties.VEHICLE_YEAR"
+                                [formControlName]="ProfileProperties.VEHICLE_YEAR"
+                                [ngClass]="{'is-invalid': (isInvalidControl(ProfileProperties.VEHICLE_YEAR))}">
+                                <option value=""></option>
+                                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                            </select>
+                            <div *ngIf="isInvalidControl(ProfileProperties.VEHICLE_YEAR)" class="invalid-feedback">
+                                {{ 'ERRORS.VEHICLE_YEAR_REQUIRED' | translate }}
+                                {{ 'ERRORS.VEHICLE_YEAR_INVALID' | translate }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <form name="form" [formGroup]="documentsForm" (ngSubmit)="form.valid && onSubmit()"
+                        enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <p>Importer une copie de la carte verte</p>
+                                <div class="border-dashed">
+                                    <app-file-upload [fileName]="'greenCard'"></app-file-upload>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <p>Importer une copie du document d'assurance</p>
+                                <div class="border-dashed">
+                                    <app-file-upload [fileName]="'insuranceDocument'"></app-file-upload>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <p>Importer une copie du permis de conduire</p>
+                                <div class="border-dashed">
+                                    <app-file-upload [fileName]="'drivingLicence'"></app-file-upload>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="button-row">
+                    <button class="btn btn-primary" [disabled]="!form.valid" mat-flat-button color="primary">
+                        {{ 'COMPONENTS.PROFILE.SAVE' | translate }}
+                    </button>
+                </div>
+            </form>
+        </mat-card>
+
+    </div>
+</div>
