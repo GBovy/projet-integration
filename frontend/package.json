@@ -33,7 +33,7 @@
     "leaflet-control-geocoder": "^1.10.0",
     "leaflet-routing-machine": "^3.2.12",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-es6": "^1.0.0",
     "ngx-mask": "^8.1.7",
     "ngx-stripe": "^7.4.4",
